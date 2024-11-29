@@ -1,0 +1,29 @@
+initialise local repository---------
+git init
+
+set up login for first time-----------
+git config --global user.name "Amit"
+git config --global user.email "2w22iamit@gmail.com"
+
+check untracked files-------------
+git status
+
+adding files to staging/indexing area
+git add -A 
+git add <fileName>
+git add *.java
+git add <folderName>
+
+add changes in local repository
+gid commit -m "message"
+
+Now create a remote repository on GitHub and copy repo path
+https://github.com/amit2soni/HybridAutomationFramework.git
+
+Link local repo to remote repo (one time job)
+git remote add origin "https://github.com/amit2soni/HybridAutomationFramework.git"
+
+push code to remote repo
+git push origin master
+
+it might ask for login , so we can go for token generation in GitHub
