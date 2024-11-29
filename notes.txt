@@ -1,1 +1,65 @@
 1. To run only failed test , go to test-output folder run testng-failed.xml
+
+docker version 
+
+docker login
+
+docker help
+
+docker info
+
+docker images -> to get all images
+
+docker pull <imageName> -> to download an image
+
+docker rmi <imageID> -> delete an image with given image ID
+
+For one image we can create multiple containers
+
+docker ps -> shows the containers currently running on system
+
+docker run ubuntu -> create a container of image ubuntu , if ubuntu image not present then it downloads the image and then creates the container
+
+docker start <containerID> -> start the container
+
+docker stop <containerID> -> stops the container
+
+docker rm <containerId/containerName> -> removes the container
+
+docker system prune -f -> deletes all containers
+
+
+For Automation testing we will need
+3 containers 
+1- hub
+2- linux-firefox
+3- linux-chrome
+
+Selenium Grid Set up with Docker
+
+1- Pull Docker Images
+[docker pull selenium/hub]
+[docker pull selenium/node-firefox]
+[docker pull selenium/node-chrome]
+
+2-Create a common network to connect all containers using below command
+[docker network create <networkName>]
+
+3-Create a container for hub using image selenium/hub
+[docker run -d -p 4442-4444:4442-4444 --net <networkName> --name <hubName> selenium/hub]
+-p 4442-4444:4442-4444 -> specifies a dynamic port between 4442 to 4444
+
+4-Create container for chrome node
+docker run -d --net <networkName> -e SE_EVENT_BUS_HOST=<hubName> -e SE_EVENT_BUS_PUBLISH_PORT=4442 -e SE_EVENT_BUS_SUBSCRIBE_PORT=4443 selenium/node-chrome
+
+5-Create container for firefox node
+docker run -d --net <networkName> -e SE_EVENT_BUS_HOST=<hubName> -e SE_EVENT_BUS_PUBLISH_PORT=4442 -e SE_EVENT_BUS_SUBSCRIBE_PORT=4443 selenium/node-firefox
+
+
+Run Test through docker-compose.yaml config file ( alternative of above 5 steps )
+go to the location of config file and run below commands
+docker-compose up
+docker-compose down
+
+
+
