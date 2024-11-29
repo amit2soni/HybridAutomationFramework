@@ -1,0 +1,1 @@
+1. To run only failed test , go to test-output folder run testng-failed.xml
