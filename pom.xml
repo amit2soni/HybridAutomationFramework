@@ -29,7 +29,7 @@
                     <version>3.2.2</version>
                     <configuration>
                         <suiteXmlFiles>
-                            <suiteXmlFile>browserStack.xml</suiteXmlFile>
+                            <suiteXmlFile>dockerGrid.xml</suiteXmlFile>
                         </suiteXmlFiles>
                     </configuration>
                 </plugin>
@@ -53,7 +53,7 @@
             <artifactId>poi</artifactId>
             <version>5.3.0</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml -->
+
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>

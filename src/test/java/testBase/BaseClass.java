@@ -81,7 +81,7 @@ public class BaseClass {
             browserstackOptions.put("sessionName", context.getName());
             caps.setCapability("bstack:options", browserstackOptions);
 
-// Initialize RemoteWebDriver
+// Initialize RemoteWebDriver instance
              driver = new RemoteWebDriver(new URL(URL), caps);
         }
         else{
