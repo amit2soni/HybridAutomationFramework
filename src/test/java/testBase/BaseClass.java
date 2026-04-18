@@ -42,49 +42,50 @@ public class BaseClass {
     @Parameters({"os","browser"})
     public void setUp(String os , String br, ITestContext context) throws IOException {
 
-        FileReader file = new FileReader("./src//test//resources//config.properties");
-        prop = new Properties();
-        prop.load(file);
-
+//        FileReader file = new FileReader("./src//test//resources//config.properties");
+//        prop = new Properties();
+//        prop.load(file);
+//
         logger = LogManager.getLogger(this.getClass());
+//
+//        if(prop.getProperty("execution_env").equalsIgnoreCase("grid")){
+//            DesiredCapabilities cap = new DesiredCapabilities();
+//            if(os.equalsIgnoreCase("windows")){
+//                cap.setPlatform(Platform.WIN11);
+//            }else if(os.equalsIgnoreCase("mac")){
+//                cap.setPlatform(Platform.MAC);
+//            }else if(os.equalsIgnoreCase("linux")){
+//                cap.setPlatform(Platform.LINUX);
+//            } else{
+//                System.out.println("OS not found");
+//                return;
+//            }
+//            switch (br){
+//                case "chrome" : cap.setBrowserName("chrome"); break;
+//                case "edge" : cap.setBrowserName("MicrosoftEdge"); break;
+//                case "firefox" : cap.setBrowserName("firefox"); break;
+//                default: System.out.println("Invalid Browser Name"); return;
+//            }
+//            driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"),cap);
+//
+//        }else if(prop.getProperty("execution_env").equalsIgnoreCase("bstack")){
+//            DesiredCapabilities caps = new DesiredCapabilities();
+//            caps.setCapability("browserName", br);
+//            caps.setCapability("browserVersion", "latest");
+//
+//// Add OS and device details
+//            HashMap<String, Object> browserstackOptions = new HashMap<String, Object>();
+//            browserstackOptions.put("os", "Windows");
+//            browserstackOptions.put("osVersion", "11");
+//            browserstackOptions.put("projectName", "Open Cart");
+//            browserstackOptions.put("buildName", "Build_1");  // Group tests under one build
+//            browserstackOptions.put("sessionName", context.getName());
+//            caps.setCapability("bstack:options", browserstackOptions);
+//
+//// Initialize RemoteWebDriver
+//             driver = new RemoteWebDriver(new URL(URL), caps);
+//        }else if(prop.getProperty("execution_env").equalsIgnoreCase("headless")){
 
-        if(prop.getProperty("execution_env").equalsIgnoreCase("grid")){
-            DesiredCapabilities cap = new DesiredCapabilities();
-            if(os.equalsIgnoreCase("windows")){
-                cap.setPlatform(Platform.WIN11);
-            }else if(os.equalsIgnoreCase("mac")){
-                cap.setPlatform(Platform.MAC);
-            }else if(os.equalsIgnoreCase("linux")){
-                cap.setPlatform(Platform.LINUX);
-            } else{
-                System.out.println("OS not found");
-                return;
-            }
-            switch (br){
-                case "chrome" : cap.setBrowserName("chrome"); break;
-                case "edge" : cap.setBrowserName("MicrosoftEdge"); break;
-                case "firefox" : cap.setBrowserName("firefox"); break;
-                default: System.out.println("Invalid Browser Name"); return;
-            }
-            driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"),cap);
-
-        }else if(prop.getProperty("execution_env").equalsIgnoreCase("bstack")){
-            DesiredCapabilities caps = new DesiredCapabilities();
-            caps.setCapability("browserName", br);
-            caps.setCapability("browserVersion", "latest");
-
-// Add OS and device details
-            HashMap<String, Object> browserstackOptions = new HashMap<String, Object>();
-            browserstackOptions.put("os", "Windows");
-            browserstackOptions.put("osVersion", "11");
-            browserstackOptions.put("projectName", "Open Cart");
-            browserstackOptions.put("buildName", "Build_1");  // Group tests under one build
-            browserstackOptions.put("sessionName", context.getName());
-            caps.setCapability("bstack:options", browserstackOptions);
-
-// Initialize RemoteWebDriver
-             driver = new RemoteWebDriver(new URL(URL), caps);
-        }else if(prop.getProperty("execution_env").equalsIgnoreCase("headless")){
             ChromeOptions options = new ChromeOptions();
 
             options.addArguments("--headless=new");
@@ -93,16 +94,18 @@ public class BaseClass {
             options.addArguments("--window-size=1920,1080");
             options.addArguments("--high-dpi-support=1");
             options.addArguments("--force-device-scale-factor=1");
+            System.out.println("Chrome options: " + options);
             driver = new ChromeDriver(options);
-        }
-        else if(prop.getProperty("execution_env").equalsIgnoreCase("local")){
-            switch (br){
-                case "chrome" : driver = new ChromeDriver(); break;
-                case "edge" : driver = new EdgeDriver(); break;
-                case "firefox" : driver = new FirefoxDriver(); break;
-                default: System.out.println("Invalid Browser Name"); return;
-            }
-        }
+
+//        }
+//        else if(prop.getProperty("execution_env").equalsIgnoreCase("local")){
+//            switch (br){
+//                case "chrome" : driver = new ChromeDriver(); break;
+//                case "edge" : driver = new EdgeDriver(); break;
+//                case "firefox" : driver = new FirefoxDriver(); break;
+//                default: System.out.println("Invalid Browser Name"); return;
+//            }
+//        }
 
         driver.manage().deleteAllCookies();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
