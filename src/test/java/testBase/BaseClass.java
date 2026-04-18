@@ -1,5 +1,6 @@
 package testBase;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.OutputType;
@@ -85,11 +86,14 @@ public class BaseClass {
              driver = new RemoteWebDriver(new URL(URL), caps);
         }else if(prop.getProperty("execution_env").equalsIgnoreCase("remote")){
             ChromeOptions options = new ChromeOptions();
-            options.addArguments("--headless=new");
+
+            options.addArguments("--headless=new");   // MUST
             options.addArguments("--no-sandbox");
             options.addArguments("--disable-dev-shm-usage");
+            options.addArguments("--disable-gpu");
             options.addArguments("--window-size=1920,1080");
 
+            WebDriverManager.chromedriver().setup();
             driver = new ChromeDriver(options);
         }
         else{
