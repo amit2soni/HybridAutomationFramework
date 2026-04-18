@@ -125,16 +125,25 @@ public class BaseClass {
     }
 
     public  String captureScreen(String tname){
-        String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
+        if (driver == null) {
+            System.out.println("Driver is null - screenshot skipped");
+            return null;
+        }
+        try {
+            String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
 
-        TakesScreenshot takesScreenshot = (TakesScreenshot) driver;
-        File sourceFile = takesScreenshot.getScreenshotAs(OutputType.FILE);
+            TakesScreenshot takesScreenshot = (TakesScreenshot) driver;
+            File sourceFile = takesScreenshot.getScreenshotAs(OutputType.FILE);
 
-        String targetFilePath = System.getProperty("user.dir") + "\\screenshots\\" + tname + "_" + timeStamp + ".png";
-        File targetFile = new File(targetFilePath);
+            String targetFilePath = System.getProperty("user.dir") + "\\screenshots\\" + tname + "_" + timeStamp + ".png";
+            File targetFile = new File(targetFilePath);
 
-        sourceFile.renameTo(targetFile);
+            sourceFile.renameTo(targetFile);
 
-        return  targetFilePath;
+            return targetFilePath;
+        } catch (Exception e) {
+            System.out.println("Screenshot failed: " + e.getMessage());
+            return null;
+        }
     }
 }
