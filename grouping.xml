@@ -5,14 +5,14 @@
     <groups>
         <run>
             <include name="master"/>
-            <exlude name="dataDriven"/>
+            <exclude name="dataDriven"/>
         </run>
     </groups>
     <listeners>
         <listener class-name="utilities.ExtentReportManager"/>
     </listeners>
     <test thread-count="5" name="Test">
-        <parameter name="os" value="windows"/>
+        <parameter name="os" value="linux"/>
         <parameter name="browser" value="chrome"/>
 
         <classes>
