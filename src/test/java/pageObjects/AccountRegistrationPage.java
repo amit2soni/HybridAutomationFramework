@@ -89,6 +89,8 @@ public class AccountRegistrationPage extends BasePage {
             return e.getMessage();
         }
     }
+
+
 }
 
 

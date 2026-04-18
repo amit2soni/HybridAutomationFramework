@@ -6,7 +6,7 @@
         <parameter name="browser" value="chrome"/>
         
         <classes>
-            <class name="testCases.TC001_AccountRegistrationTest"/>
+            <class name="testCases.TC001AccountRegistrationTest"/>
         </classes>
     </test>
 
@@ -15,7 +15,7 @@
         <parameter name="browser" value="edge"/>
 
         <classes>
-            <class name="testCases.TC001_AccountRegistrationTest"/>
+            <class name="testCases.TC001AccountRegistrationTest"/>
         </classes>
     </test>
 </suite>

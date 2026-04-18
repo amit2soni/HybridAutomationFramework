@@ -7,7 +7,7 @@ import pageObjects.LoginPage;
 import pageObjects.MyAccountPage;
 import testBase.BaseClass;
 
-public class TC002_LoginTest extends BaseClass {
+public class TC002LoginTest extends BaseClass {
 
     @Test(groups = {"regression","master"})
     public void verify_login() {
@@ -30,7 +30,7 @@ public class TC002_LoginTest extends BaseClass {
             MyAccountPage map = new MyAccountPage(driver);
             boolean targetPage = map.isMyAccountHeaderExists();
 
-            Assert.assertEquals(targetPage, true, "Login Failed");
+            Assert.assertTrue(targetPage, "Login Failed");
             logger.info("TC002 LoginTest Finished");
         } catch (Exception e) {
             Assert.fail();

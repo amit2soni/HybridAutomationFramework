@@ -5,7 +5,7 @@
     <groups>
         <run>
             <include name="master"/>
-            <exclude name="dataDriven"/>
+            <include name="dataDriven"/>
         </run>
     </groups>
     <listeners>
@@ -16,9 +16,9 @@
         <parameter name="browser" value="chrome"/>
         
         <classes>
-            <class name="testCases.TC001_AccountRegistrationTest"/>
-            <class name="testCases.TC002_LoginTest"/>
-            <class name="testCases.TC003_LoginDataDrivenTest"/>
+            <class name="testCases.TC001AccountRegistrationTest"/>
+            <class name="testCases.TC002LoginTest"/>
+            <class name="testCases.TC003LoginDataDrivenTest"/>
         </classes>
     </test>
 </suite>

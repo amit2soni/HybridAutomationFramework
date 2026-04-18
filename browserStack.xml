@@ -7,8 +7,8 @@
         <parameter name="browser" value="Chrome" />
 
         <classes>
-            <class name="testCases.TC001_AccountRegistrationTest"/>
-            <class name="testCases.TC002_LoginTest"/>
+            <class name="testCases.TC001AccountRegistrationTest"/>
+            <class name="testCases.TC002LoginTest"/>
         </classes>
 
     </test>
