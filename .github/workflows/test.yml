@@ -27,6 +27,9 @@ jobs:
           key: maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: maven-
 
+      - name: Setup Chrome
+        uses: browser-actions/setup-chrome@v1
+
       - name: Run Tests
         run: mvn clean test
 

@@ -1,8 +1,8 @@
 -------------------------------------------------------------------------------
 Test set: TestSuite
 -------------------------------------------------------------------------------
-Tests run: 3, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 27.27 s <<< FAILURE! -- in TestSuite
-testCases.TC003LoginDataDrivenTest.verify_loginDDT -- Time elapsed: 6.398 s <<< FAILURE!
+Tests run: 3, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 31.81 s <<< FAILURE! -- in TestSuite
+testCases.TC003LoginDataDrivenTest.verify_loginDDT -- Time elapsed: 6.731 s <<< FAILURE!
 java.lang.RuntimeException: java.lang.NoClassDefFoundError: org/apache/poi/logging/PoiLogManager
 	at org.testng.internal.invokers.MethodInvocationHelper.invokeMethodNoCheckedException(MethodInvocationHelper.java:58)
 	at org.testng.internal.invokers.MethodInvocationHelper.invokeDataProvider(MethodInvocationHelper.java:159)
