@@ -95,7 +95,9 @@ public class BaseClass {
             options.addArguments("--high-dpi-support=1");
             options.addArguments("--force-device-scale-factor=1");
             System.out.println("Chrome options: " + options);
-            driver = new ChromeDriver(options);
+        options.setBinary("/usr/bin/google-chrome");
+
+        driver = new ChromeDriver(options);
 
 //        }
 //        else if(prop.getProperty("execution_env").equalsIgnoreCase("local")){

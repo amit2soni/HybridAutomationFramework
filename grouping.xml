@@ -11,7 +11,7 @@
     <listeners>
         <listener class-name="utilities.ExtentReportManager"/>
     </listeners>
-    <test thread-count="5" name="Test">
+    <test thread-count="1" name="Test">
         <parameter name="os" value="linux"/>
         <parameter name="browser" value="chrome"/>
 

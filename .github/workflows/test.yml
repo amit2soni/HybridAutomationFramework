@@ -30,6 +30,9 @@ jobs:
       - name: Setup Chrome
         uses: browser-actions/setup-chrome@v1
 
+      - name: Verify Chrome
+        run: google-chrome --version
+
       - name: Run Tests
         run: mvn clean test -Denv=ci
 
