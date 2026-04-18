@@ -47,7 +47,7 @@ public class BaseClass {
 
         logger = LogManager.getLogger(this.getClass());
 
-        if(prop.getProperty("execution_env").equalsIgnoreCase("remote")){
+        if(prop.getProperty("execution_env").equalsIgnoreCase("grid")){
             DesiredCapabilities cap = new DesiredCapabilities();
             if(os.equalsIgnoreCase("windows")){
                 cap.setPlatform(Platform.WIN11);
@@ -83,6 +83,14 @@ public class BaseClass {
 
 // Initialize RemoteWebDriver
              driver = new RemoteWebDriver(new URL(URL), caps);
+        }else if(prop.getProperty("execution_env").equalsIgnoreCase("remote")){
+            ChromeOptions options = new ChromeOptions();
+            options.addArguments("--headless=new");
+            options.addArguments("--no-sandbox");
+            options.addArguments("--disable-dev-shm-usage");
+            options.addArguments("--window-size=1920,1080");
+
+            driver = new ChromeDriver(options);
         }
         else{
             switch (br){
