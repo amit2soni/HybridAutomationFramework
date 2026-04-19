@@ -1,37 +1,29 @@
-name: Build and Test
+name: Run TestNG Tests
 
-on: [push]
+on:
+  push:
+    branches: [ "master" ]
 
 jobs:
-
-  build:
-
+  test:
     runs-on: ubuntu-latest
 
     steps:
+      - uses: actions/checkout@v4
 
-    - uses: actions/checkout@v2
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
 
-    - name: Set up JDK 1.8
+      - name: Setup Chrome
+        uses: browser-actions/setup-chrome@v1
+        with:
+          chrome-version: stable
 
-      uses: actions/setup-java@v1
+      - name: Verify Chrome
+        run: google-chrome --version
 
-      with:
-
-        java-version: 1.8
-
-        server-id: github
-
-        settings-path: ${{ github.workspace }}
-
-    - name: Install Google Chrome
-
-      run: |
-        
-        chmod +x ./scripts/InstallChrome.sh
-        
-                    ./scripts/InstallChrome.sh 
-
-    - name: Build with Maven
-
-      run: mvn -B package --file pom.xml test
+      - name: Run Tests
+        run: xvfb-run mvn clean test -Denv=ci
