@@ -1,7 +1,9 @@
 package testBase;
 
+import com.epam.healenium.SelfHealingDriver;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.text.RandomStringGenerator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.OutputType;
@@ -32,7 +34,8 @@ public class BaseClass {
     public static final String USERNAME = "amitkumarsoni_NxbrgB";
     public static final String AUTOMATE_KEY = "JkizspER4GrwS4JiWwxU";
     public static final String URL = "https://" + USERNAME + ":" + AUTOMATE_KEY + "@hub-cloud.browserstack.com/wd/hub";
-    public static WebDriver driver;
+    protected WebDriver driver;
+    protected SelfHealingDriver selfHealingDriver;
     public Logger logger;
     public Properties prop;
 
@@ -45,7 +48,7 @@ public class BaseClass {
         prop.load(file);
 
         logger = LogManager.getLogger(this.getClass());
-        if (prop.getProperty("execution_env").equalsIgnoreCase("bstack")) {
+        if (prop.getProperty("execution_env").equalsIgnoreCase("browserstack")) {
             DesiredCapabilities caps = new DesiredCapabilities();
             caps.setCapability("browserName", br);
             caps.setCapability("browserVersion", "latest");
@@ -58,40 +61,30 @@ public class BaseClass {
             browserstackOptions.put("sessionName", context.getName());
             caps.setCapability("bstack:options", browserstackOptions);
 
-            driver = new RemoteWebDriver(new URL(URL), caps);
-        } else if (prop.getProperty("execution_env").equalsIgnoreCase("headless")) {
+            driver = new DriverFactory("remote",logger,URL,caps).createDriver();
+        } else if (prop.getProperty("execution_env").equalsIgnoreCase("grid")) {
+            DesiredCapabilities caps = new DesiredCapabilities();
+            caps.setCapability("browserName", br);
+            caps.setCapability("browserVersion", "latest");
+            driver =  new DriverFactory("remote",logger,"http://localhost:4444",caps).createDriver();
 
-            ChromeOptions options = new ChromeOptions();
-
-            options.addArguments("--no-sandbox");
-
-            options.addArguments("--disable-dev-shm-usage");
-
-            options.addArguments("--headless");
-
-            WebDriverManager.chromedriver().setup();
-
-        } else if (prop.getProperty("execution_env").equalsIgnoreCase("local")) {
-            switch (br) {
-                case "chrome":
-                    driver = new ChromeDriver();
-                    break;
-                case "edge":
-                    driver = new EdgeDriver();
-                    break;
-                case "firefox":
-                    driver = new FirefoxDriver();
-                    break;
-                default:
-                    System.out.println("Invalid Browser Name");
-                    return;
-            }
+        } else if (prop.getProperty("execution_env").equalsIgnoreCase("githubactions")) {
+            driver = new DriverFactory("headlesschrome",logger).createDriver();
+        }else if (prop.getProperty("execution_env").equalsIgnoreCase("local")) {
+            driver = new DriverFactory("chrome",logger).createDriver();
+           selfHealingDriver = SelfHealingDriver.create(driver);
         }
-
-        driver.manage().deleteAllCookies();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        driver.get(prop.getProperty("appURL"));
-        driver.manage().window().maximize();
+        if(prop.getProperty("self_heal").equalsIgnoreCase("yes")){
+            selfHealingDriver.manage().deleteAllCookies();
+            selfHealingDriver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(10));
+            selfHealingDriver.get(prop.getProperty("appURL"));
+            selfHealingDriver.manage().window().maximize();
+        }else {
+            driver.manage().deleteAllCookies();
+            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+            driver.get(prop.getProperty("appURL"));
+            driver.manage().window().maximize();
+        }
     }
 
     @AfterClass(groups = {"sanity", "master", "regression"})
@@ -100,15 +93,27 @@ public class BaseClass {
     }
 
     public String randomString(int length) {
-        return RandomStringUtils.randomAlphabetic(length);
+        RandomStringGenerator generator = new RandomStringGenerator.Builder()
+                .withinRange('a', 'z')
+                .withinRange('A', 'Z')
+                .build();
+        return generator.generate(length);
     }
 
     public String randomNumber(int length) {
-        return RandomStringUtils.randomNumeric(length);
+        RandomStringGenerator generator = new RandomStringGenerator.Builder()
+                .withinRange('0', '9')
+                .build();
+        return generator.generate(length);
     }
 
     public String randomAlphaNumeric(int length) {
-        return RandomStringUtils.randomAlphanumeric(length);
+        RandomStringGenerator generator = new RandomStringGenerator.Builder()
+                .withinRange('0', '9')
+                .withinRange('a', 'z')
+                .withinRange('A', 'Z')
+                .build();
+        return generator.generate(length);
     }
 
     public String captureScreen(String tname) {
