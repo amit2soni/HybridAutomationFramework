@@ -2,14 +2,17 @@ name: Run TestNG Tests
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
   test:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
       - name: Set up Java
         uses: actions/setup-java@v4
@@ -17,13 +20,15 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
+      - name: Cache Maven dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2
+          key: maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: maven-
+
       - name: Setup Chrome
         uses: browser-actions/setup-chrome@v1
-        with:
-          chrome-version: stable
-
-      - name: Verify Chrome
-        run: google-chrome --version
 
       - name: Run Tests
-        run: xvfb-run mvn clean test -Denv=ci
+        run: mvn clean test
